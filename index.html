@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pour ma Habibi ❤️</title>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #fff0f3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(255, 77, 109, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+
+        .main-img {
+            width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 3px solid #ff4d6d;
+        }
+
+        h1 {
+            color: #d63384;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 20px;
+            min-height: 150px;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        #successSection {
+            display: none;
+        }
+
+        .success-text {
+            color: #ff4d6d;
+            font-size: 2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .sub-text {
+            font-size: 1.2rem;
+            color: #555;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <img src="photo.png" alt="Habibi" class="main-img">
+        
+        <div id="questionSection">
+            <h1>Veux-tu être ma valentine Habibi ? ❤️</h1>
+            <div class="btn-container">
+                <button id="yesBtn" onclick="celebrate()">Yes</button>
+                <button id="noBtn" onclick="actionNo()">No</button>
+            </div>
+        </div>
+
+        <div id="successSection">
+            <p class="success-text">Love you Chame ❤️</p>
+            <p class="sub-text">As you should ngga </p>
+        </div>
+    </div>
+
+    <script>
+        let yesScale = 1;
+
+        function actionNo() {
+            // Le bouton YES grossit de plus en plus
+            yesScale += 0.5;
+            document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+            
+            // Le bouton NO rapetisse et finit par disparaître
+            let noBtn = document.getElementById('noBtn');
+            let currentSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
+            if (currentSize > 6) {
+                noBtn.style.fontSize = (currentSize - 2) + "px";
+                noBtn.style.padding = "5px 10px";
+            } else {
+                noBtn.style.display = "none";
+            }
+        }
+
+        function celebrate() {
+            document.getElementById('questionSection').style.display = 'none';
+            document.getElementById('successSection').style.display = 'block';
+            
+            // Explosion de confettis
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 },
+                colors: ['#ff4d6d', '#ffb3c1', '#ffffff']
+            });
+        }
+    </script>
+</body>
+</html>
