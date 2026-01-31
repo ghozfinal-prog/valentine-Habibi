@@ -15,7 +15,7 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
-            touch-action: manipulation; /* Optimisé pour mobile */
+            touch-action: manipulation;
         }
 
         .card {
@@ -26,6 +26,7 @@
             text-align: center;
             max-width: 400px;
             width: 90%;
+            position: relative;
         }
 
         .main-img {
@@ -48,6 +49,7 @@
             gap: 20px;
             margin-top: 20px;
             height: 100px;
+            position: relative; /* Container pour positionner les boutons au début */
         }
 
         button {
@@ -57,18 +59,19 @@
             border-radius: 50px;
             cursor: pointer;
             border: none;
-            transition: all 0.1s ease;
+            transition: transform 0.2s ease;
         }
 
         #yesBtn {
             background-color: #ff4d6d;
             color: white;
+            z-index: 1;
         }
 
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: absolute; /* Indispensable pour le déplacement libre */
+            z-index: 2;
         }
 
         #successSection {
@@ -102,19 +105,26 @@
     </div>
 
     <script>
+        let yesScale = 1;
+
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
+            const yesBtn = document.getElementById('yesBtn');
             
-            // Calcul de la zone disponible (on évite les bords de 50px)
+            // On fait grossir le bouton Yes un petit peu pour la blague
+            yesScale += 0.2;
+            yesBtn.style.transform = `scale(${yesScale})`;
+
+            // Déplacement aléatoire partout sur l'écran
             const maxX = window.innerWidth - noBtn.offsetWidth - 50;
             const maxY = window.innerHeight - noBtn.offsetHeight - 50;
             
             const randomX = Math.floor(Math.random() * maxX) + 25;
             const randomY = Math.floor(Math.random() * maxY) + 25;
             
+            noBtn.style.position = 'fixed'; // On passe en fixed seulement au moment du clic
             noBtn.style.left = randomX + 'px';
             noBtn.style.top = randomY + 'px';
-            noBtn.style.position = 'fixed';
         }
 
         function celebrate() {
