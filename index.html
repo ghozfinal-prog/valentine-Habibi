@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pour ma Habibi ❤️</title>
+    <title>Pour mon Habibi ❤️</title>
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         body {
@@ -25,6 +25,7 @@
             text-align: center;
             max-width: 400px;
             width: 90%;
+            position: relative;
         }
 
         .main-img {
@@ -44,31 +45,30 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 20px;
             margin-top: 20px;
-            min-height: 150px;
+            height: 100px;
         }
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            border: none;
+        button {
             padding: 12px 25px;
             font-size: 18px;
             font-weight: bold;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.1s ease;
+            border: none;
+            transition: all 0.2s ease;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
         }
 
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            border: none;
-            padding: 12px 25px;
-            font-size: 18px;
-            border-radius: 50px;
-            cursor: pointer;
+            position: absolute; /* Permet au bouton de bouger partout */
         }
 
         #successSection {
@@ -79,58 +79,47 @@
             color: #ff4d6d;
             font-size: 2rem;
             font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .sub-text {
-            font-size: 1.2rem;
-            color: #555;
         }
     </style>
 </head>
 <body>
 
-    <div class="card">
+    <div class="card" id="mainCard">
         <img src="photo.png" alt="Habibi" class="main-img">
         
         <div id="questionSection">
             <h1>Veux-tu être ma valentine Habibi ? ❤️</h1>
             <div class="btn-container">
                 <button id="yesBtn" onclick="celebrate()">Yes</button>
-                <button id="noBtn" onclick="actionNo()">No</button>
+                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
             </div>
         </div>
 
         <div id="successSection">
-            <p class="success-text">Love you Chame ❤️</p>
-            <p class="sub-text">As you should nigga </p>
+            <p class="success-text">Love you Cham ❤️</p>
+            <p style="font-size: 1.2rem; color: #555;">As you should ngga ❤️</p>
         </div>
     </div>
 
     <script>
-        let yesScale = 1;
-
-        function actionNo() {
-            // Le bouton YES grossit de plus en plus
-            yesScale += 0.5;
-            document.getElementById('yesBtn').style.transform = `scale(${yesScale})`;
+        function moveButton() {
+            const noBtn = document.getElementById('noBtn');
             
-            // Le bouton NO rapetisse et finit par disparaître
-            let noBtn = document.getElementById('noBtn');
-            let currentSize = parseFloat(window.getComputedStyle(noBtn).fontSize);
-            if (currentSize > 6) {
-                noBtn.style.fontSize = (currentSize - 2) + "px";
-                noBtn.style.padding = "5px 10px";
-            } else {
-                noBtn.style.display = "none";
-            }
+            // Calculer des positions aléatoires dans l'écran
+            // On garde une marge pour que le bouton ne sorte pas trop
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
+            noBtn.style.position = 'fixed'; // Il bouge sur tout l'écran maintenant
         }
 
         function celebrate() {
             document.getElementById('questionSection').style.display = 'none';
             document.getElementById('successSection').style.display = 'block';
+            document.getElementById('noBtn').style.display = 'none';
             
-            // Explosion de confettis
             confetti({
                 particleCount: 150,
                 spread: 70,
@@ -140,5 +129,4 @@
         }
     </script>
 </body>
-
 </html>
