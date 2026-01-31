@@ -15,6 +15,7 @@
             height: 100vh;
             margin: 0;
             overflow: hidden;
+            touch-action: manipulation; /* Optimisé pour mobile */
         }
 
         .card {
@@ -25,7 +26,6 @@
             text-align: center;
             max-width: 400px;
             width: 90%;
-            position: relative;
         }
 
         .main-img {
@@ -57,7 +57,7 @@
             border-radius: 50px;
             cursor: pointer;
             border: none;
-            transition: all 0.2s ease;
+            transition: all 0.1s ease;
         }
 
         #yesBtn {
@@ -68,7 +68,7 @@
         #noBtn {
             background-color: #adb5bd;
             color: white;
-            position: absolute; /* Permet au bouton de bouger partout */
+            position: absolute; /* Indispensable pour le déplacement libre */
         }
 
         #successSection {
@@ -84,14 +84,14 @@
 </head>
 <body>
 
-    <div class="card" id="mainCard">
+    <div class="card">
         <img src="photo.png" alt="Habibi" class="main-img">
         
         <div id="questionSection">
             <h1>Veux-tu être ma valentine Habibi ? ❤️</h1>
             <div class="btn-container">
                 <button id="yesBtn" onclick="celebrate()">Yes</button>
-                <button id="noBtn" onmouseover="moveButton()" onclick="moveButton()">No</button>
+                <button id="noBtn" onclick="moveButton()">No</button>
             </div>
         </div>
 
@@ -105,14 +105,16 @@
         function moveButton() {
             const noBtn = document.getElementById('noBtn');
             
-            // Calculer des positions aléatoires dans l'écran
-            // On garde une marge pour que le bouton ne sorte pas trop
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            // Calcul de la zone disponible (on évite les bords de 50px)
+            const maxX = window.innerWidth - noBtn.offsetWidth - 50;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 50;
             
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
-            noBtn.style.position = 'fixed'; // Il bouge sur tout l'écran maintenant
+            const randomX = Math.floor(Math.random() * maxX) + 25;
+            const randomY = Math.floor(Math.random() * maxY) + 25;
+            
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+            noBtn.style.position = 'fixed';
         }
 
         function celebrate() {
